@@ -1,0 +1,64 @@
+{
+  "name": "MINAS Kafe - Premium Kahve Deneyimi",
+  "short_name": "MINAS Kafe",
+  "description": "Türkiye'nin en iyi kahvesi. Huzurlu ortamda premium kahve deneyimi.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2d5016",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["food", "business"],
+  "screenshots": [
+    {
+      "src": "assets/images/screenshot1.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "İletişim",
+      "short_name": "İletişim",
+      "description": "MINAS Kafe ile iletişim kurun",
+      "url": "/#iletisim",
+      "icons": [
+        {
+          "src": "assets/favicon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Menü",
+      "short_name": "Menü",
+      "description": "MINAS Kafe Menüsünü görüntüleyin",
+      "url": "/#menu",
+      "icons": [
+        {
+          "src": "assets/favicon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

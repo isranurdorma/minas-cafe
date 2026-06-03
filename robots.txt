@@ -1,0 +1,22 @@
+# MINAS Kafe - Robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# Allow search engines to index all content
+Allow: /assets/
+
+# Sitemap
+Sitemap: https://www.minaskafe.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Specific search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
