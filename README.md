@@ -4,6 +4,16 @@
 
 ---
 
+## 📸 Ekran Görüntüleri
+
+### 🖥️ Masaüstü
+![Masaüstü Görünümü](assets/images/desktop.png)
+
+### 📱 Mobil
+![Mobil Görünümü](assets/images/mobil.png)
+
+---
+
 ## 🌐 Canlı Site
 
 👉 [minas-cafe sitesini ziyaret et](https://isranurdorma.github.io/minas-cafe)
