@@ -5,19 +5,19 @@
 (function() {
     'use strict';
 
-    const body = document.body;
-    const themeBtn = document.querySelector('.btn-theme');
-    const themeIcon = document.querySelector('.theme-icon');
+    const govde = document.body;
+    const temaButonu = document.querySelector('.btn-theme');
+    const temaIkonu = document.querySelector('.theme-icon');
     
-    // Get saved theme from localStorage or use system preference
-    function getInitialTheme() {
-        const saved = localStorage.getItem('theme');
+    // Kayıtlı temayı veya sistem tercihini al
+    function baslangicTemasiniAl() {
+        const kaydedilen = localStorage.getItem('theme');
         
-        if (saved) {
-            return saved;
+        if (kaydedilen) {
+            return kaydedilen;
         }
         
-        // Check system preference
+        // Sistem tercihini kontrol et
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             return 'dark-theme';
         }
@@ -25,68 +25,68 @@
         return 'light-theme';
     }
 
-    // Initialize theme
-    function initTheme() {
-        const theme = getInitialTheme();
-        setTheme(theme);
+    // Temayı başlat
+    function temayiBaslat() {
+        const tema = baslangicTemasiniAl();
+        temayiAyarla(tema);
     }
 
-    // Set theme
-    function setTheme(theme) {
-        body.classList.remove('light-theme', 'dark-theme');
-        body.classList.add(theme);
-        localStorage.setItem('theme', theme);
-        updateThemeIcon(theme);
-        updateMetaThemeColor(theme);
+    // Temayı ayarla
+    function temayiAyarla(tema) {
+        govde.classList.remove('light-theme', 'dark-theme');
+        govde.classList.add(tema);
+        localStorage.setItem('theme', tema);
+        temaIkonunuGuncelle(tema);
+        metaTemaRenginiGuncelle(tema);
     }
 
-    // Update theme icon
-    function updateThemeIcon(theme) {
-        if (themeIcon) {
-            themeIcon.textContent = theme === 'dark-theme' ? '☀️' : '🌙';
+    // Tema ikonunu güncelle
+    function temaIkonunuGuncelle(tema) {
+        if (temaIkonu) {
+            temaIkonu.textContent = tema === 'dark-theme' ? '☀️' : '🌙';
         }
     }
 
-    // Update meta theme-color tag for mobile browsers
-    function updateMetaThemeColor(theme) {
-        const metaTheme = document.querySelector('meta[name="theme-color"]');
-        if (metaTheme) {
-            metaTheme.setAttribute('content', theme === 'dark-theme' ? '#1a3d0a' : '#2d5016');
+    // Mobil tarayıcılar için meta tema rengini güncelle
+    function metaTemaRenginiGuncelle(tema) {
+        const metaTema = document.querySelector('meta[name="theme-color"]');
+        if (metaTema) {
+            metaTema.setAttribute('content', tema === 'dark-theme' ? '#1a3d0a' : '#2d5016');
         }
     }
 
-    // Toggle theme
-    function toggleTheme() {
-        const currentTheme = body.classList.contains('dark-theme') ? 'dark-theme' : 'light-theme';
-        const newTheme = currentTheme === 'dark-theme' ? 'light-theme' : 'dark-theme';
-        setTheme(newTheme);
+    // Temayı değiştir
+    function temayiDegistir() {
+        const gecerliTema = govde.classList.contains('dark-theme') ? 'dark-theme' : 'light-theme';
+        const yeniTema = gecerliTema === 'dark-theme' ? 'light-theme' : 'dark-theme';
+        temayiAyarla(yeniTema);
     }
 
-    // Theme button event listener
-    if (themeBtn) {
-        themeBtn.addEventListener('click', toggleTheme);
+    // Tema butonu tıklama dinleyicisi
+    if (temaButonu) {
+        temaButonu.addEventListener('click', temayiDegistir);
     }
 
-    // Listen for system theme changes
+    // Sistem teması değişikliklerini dinle
     if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            // Only auto-switch if user hasn't manually set a theme
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (olay) => {
+            // Kullanıcı manuel olarak tema ayarlamadıysa otomatik değiştir
             if (!localStorage.getItem('theme')) {
-                setTheme(e.matches ? 'dark-theme' : 'light-theme');
+                temayiAyarla(olay.matches ? 'dark-theme' : 'light-theme');
             }
         });
     }
 
-    // Add keyboard shortcut (Ctrl/Cmd + Shift + T to toggle theme)
-    document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'T') {
-            e.preventDefault();
-            toggleTheme();
+    // Klavye kısayolu ekle (Ctrl/Cmd + Shift + T)
+    document.addEventListener('keydown', (olay) => {
+        if ((olay.ctrlKey || olay.metaKey) && olay.shiftKey && olay.key === 'T') {
+            olay.preventDefault();
+            temayiDegistir();
         }
     });
 
-    // Initialize theme on load
-    initTheme();
+    // Yüklenirken temayı başlat
+    temayiBaslat();
 
-    console.log('Theme module loaded - Current theme: ' + getInitialTheme());
+    console.log('Tema modülü yüklendi - Geçerli tema: ' + baslangicTemasiniAl());
 })();

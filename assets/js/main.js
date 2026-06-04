@@ -5,150 +5,186 @@
 (function() {
     'use strict';
 
-    // Mobile Menu Toggle
-    const btnMenu = document.querySelector('.btn-menu');
-    const navList = document.querySelector('.nav-list');
+    // Mobil Menü Aç/Kapat
+    const menuButonu = document.querySelector('.btn-menu');
+    const navigasyonListesi = document.querySelector('.nav-list');
 
-    if (btnMenu) {
-        btnMenu.addEventListener('click', () => {
-            btnMenu.classList.toggle('active');
-            navList.classList.toggle('active');
+    if (menuButonu) {
+        menuButonu.addEventListener('click', () => {
+            menuButonu.classList.toggle('active');
+            navigasyonListesi.classList.toggle('active');
         });
 
-        // Close menu when clicking on a link
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                btnMenu.classList.remove('active');
-                navList.classList.remove('active');
+        // Bir linke tıklandığında menüyü kapat
+        const navigasyonLinkleri = document.querySelectorAll('.nav-link');
+        navigasyonLinkleri.forEach(baglanti => {
+            baglanti.addEventListener('click', () => {
+                menuButonu.classList.remove('active');
+                navigasyonListesi.classList.remove('active');
             });
         });
 
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.navigation') && navList.classList.contains('active')) {
-                btnMenu.classList.remove('active');
-                navList.classList.remove('active');
+        // Dışarı tıklandığında menüyü kapat
+        document.addEventListener('click', (olay) => {
+            if (!olay.target.closest('.navigation') && navigasyonListesi.classList.contains('active')) {
+                menuButonu.classList.remove('active');
+                navigasyonListesi.classList.remove('active');
             }
         });
     }
 
-    // Smooth Scroll for Navigation
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href !== '#' && document.querySelector(href)) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                const headerHeight = document.querySelector('header').offsetHeight;
-                const targetPosition = target.offsetTop - headerHeight;
+    // Yumuşak Kaydırma (Smooth Scroll)
+    document.querySelectorAll('a[href^="#"]').forEach(baglanti => {
+        baglanti.addEventListener('click', function(olay) {
+            const hedefLink = this.getAttribute('href');
+            if (hedefLink !== '#' && document.querySelector(hedefLink)) {
+                olay.preventDefault();
+                const hedefEleman = document.querySelector(hedefLink);
+                const baslikYuksekligi = document.querySelector('header').offsetHeight;
+                const hedefPozisyon = hedefEleman.offsetTop - baslikYuksekligi;
 
                 window.scrollTo({
-                    top: targetPosition,
+                    top: hedefPozisyon,
                     behavior: 'smooth'
                 });
             }
         });
     });
 
-    // Scroll to top button functionality
+    // Yukarı çıkma butonu işlevselliği
     window.addEventListener('scroll', () => {
-        // Could add scroll-to-top button here
+        // Yukarı çık butonu buraya eklenebilir
     });
 
-    // Form Validation
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const message = document.getElementById('message');
+    // Form Doğrulama
+    const iletisimFormu = document.getElementById('contactForm');
+    if (iletisimFormu) {
+        iletisimFormu.addEventListener('submit', function(olay) {
+            const isim = document.getElementById('name');
+            const eposta = document.getElementById('email');
+            const mesaj = document.getElementById('message');
 
-            // Basic validation
-            if (!name.value.trim()) {
-                e.preventDefault();
+            // Basit doğrulama
+            if (!isim.value.trim()) {
+                olay.preventDefault();
                 alert('Lütfen adınızı girin');
                 return;
             }
 
-            if (!email.value.trim() || !isValidEmail(email.value)) {
-                e.preventDefault();
+            if (!eposta.value.trim() || !gecerliEpostaMi(eposta.value)) {
+                olay.preventDefault();
                 alert('Lütfen geçerli bir e-mail adresi girin');
                 return;
             }
 
-            if (!message.value.trim()) {
-                e.preventDefault();
+            if (!mesaj.value.trim()) {
+                olay.preventDefault();
                 alert('Lütfen bir mesaj yazın');
                 return;
             }
         });
     }
 
-    // Email validation
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    // E-posta doğrulama fonksiyonu
+    function gecerliEpostaMi(eposta) {
+        const epostaSabloni = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return epostaSabloni.test(eposta);
     }
 
-    // Gallery Image Animation
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                imageObserver.unobserve(entry.target);
+    // Galeri Resim Animasyonu
+    const galeriElemanlari = document.querySelectorAll('.gallery-item');
+    const resimGozlemleyici = new IntersectionObserver((girdiler) => {
+        girdiler.forEach(girdi => {
+            if (girdi.isIntersecting) {
+                girdi.target.style.opacity = '1';
+                resimGozlemleyici.unobserve(girdi.target);
             }
         });
     }, {
         threshold: 0.1
     });
 
-    galleryItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transition = 'opacity 0.6s ease-in';
-        imageObserver.observe(item);
+    galeriElemanlari.forEach(eleman => {
+        eleman.style.opacity = '0';
+        eleman.style.transition = 'opacity 0.6s ease-in';
+        resimGozlemleyici.observe(eleman);
     });
 
-    // Lazy Loading for Images (Fallback for older browsers)
-    const images = document.querySelectorAll('img[loading="lazy"]');
+    // Tembel Yükleme (Lazy Loading) (Eski tarayıcılar için yedek)
+    const resimler = document.querySelectorAll('img[loading="lazy"]');
     if ('IntersectionObserver' in window) {
-        const imageObserverLazy = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.add('loaded');
-                    imageObserverLazy.unobserve(img);
+        const tembelResimGozlemleyici = new IntersectionObserver((girdiler) => {
+            girdiler.forEach(girdi => {
+                if (girdi.isIntersecting) {
+                    const resim = girdi.target;
+                    resim.src = resim.dataset.src || resim.src;
+                    resim.classList.add('loaded');
+                    tembelResimGozlemleyici.unobserve(resim);
                 }
             });
         });
 
-        images.forEach(img => imageObserverLazy.observe(img));
+        resimler.forEach(resim => tembelResimGozlemleyici.observe(resim));
     }
 
-    // Active Navigation Link on Scroll
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    // Kaydırırken Aktif Menü Linkini Vurgulama
+    const bolumler = document.querySelectorAll('section[id]');
+    const navigasyonLinkleri2 = document.querySelectorAll('nav a[href^="#"]');
 
     window.addEventListener('scroll', () => {
-        let current = '';
+        let gecerliBolum = '';
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            if (pageYOffset >= sectionTop) {
-                current = section.getAttribute('id');
+        bolumler.forEach(bolum => {
+            const bolumUstMesafesi = bolum.offsetTop - 100;
+            if (pageYOffset >= bolumUstMesafesi) {
+                gecerliBolum = bolum.getAttribute('id');
             }
         });
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
+        navigasyonLinkleri2.forEach(baglanti => {
+            baglanti.classList.remove('active');
+            if (baglanti.getAttribute('href') === '#' + gecerliBolum) {
+                baglanti.classList.add('active');
             }
         });
     });
 
-    // Print console for debugging
-    console.log('MINAS Kafe Website Loaded Successfully');
+    // Resim Büyütme Modalı (Image Modal)
+    const modal = document.getElementById('imageModal');
+    const modalResim = document.getElementById('modalImage');
+    const modalKapat = document.querySelector('.close-modal');
+    const buyutulecekResimler = document.querySelectorAll('.menu-card img, .gallery-item img');
+
+    if (modal) {
+        buyutulecekResimler.forEach(resim => {
+            resim.addEventListener('click', function() {
+                modal.classList.add('active');
+                modalResim.src = this.src;
+            });
+        });
+
+        // Kapatma butonuna tıklandığında
+        if (modalKapat) {
+            modalKapat.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        // Modalın dışına tıklandığında
+        modal.addEventListener('click', (olay) => {
+            if (olay.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+        
+        // ESC tuşuna basıldığında
+        document.addEventListener('keydown', (olay) => {
+            if (olay.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+            }
+        });
+    }
+
+    // Hata ayıklama için konsola yazdır
+    console.log('MINAS Kafe Web Sitesi Başarıyla Yüklendi');
 })();

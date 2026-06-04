@@ -5,8 +5,8 @@
 (function() {
     'use strict';
 
-    // Translations
-    const translations = {
+    // Çeviriler
+    const ceviriler = {
         tr: {
             'Anasayfa': 'Anasayfa',
             'Hakkımızda': 'Hakkımızda',
@@ -17,7 +17,6 @@
             'Mükemmel Kahvenin Tadını Çıkar': 'Mükemmel Kahvenin Tadını Çıkar',
             'Dünya standartlarında kahve, yerel sıcaklığında hizmet': 'Dünya standartlarında kahve, yerel sıcaklığında hizmet',
             'İletişim Bilgisi': 'İletişim Bilgisi',
-            'Hakkımızda': 'Hakkımızda',
             'MINAS Kafe, 2015 yılından beri Türkiye\'nin en iyi kahvesini sunmaktadır. Etiyopya, Kenya ve Brazil\'den özel olarak seçilmiş kahve çekirdekleri kullanıyoruz.': 'MINAS Kafe, 2015 yılından beri Türkiye\'nin en iyi kahvesini sunmaktadır. Etiyopya, Kenya ve Brazil\'den özel olarak seçilmiş kahve çekirdekleri kullanıyoruz.',
             'Barista ekibimiz dünya şampiyonluklarında ödüllü, kalite ve müşteri memnuniyeti bizim önceliğimiz.': 'Barista ekibimiz dünya şampiyonluklarında ödüllü, kalite ve müşteri memnuniyeti bizim önceliğimiz.',
             'Neden MINAS Kafe?': 'Neden MINAS Kafe?',
@@ -30,9 +29,9 @@
             'Kahve Çeşidi': 'Kahve Çeşidi',
             'Menülerimiz': 'Menülerimiz',
             'Taze ve lezzetli seçenekler': 'Taze ve lezzetli seçenekler',
-            'Kahveler & Atıştırmalıklar': 'Kahveler & Atıştırmalıklar',
+            'Cold & Hot Kahveler ve İçecekler': 'Cold & Hot Kahveler ve İçecekler',
             'Espresso, cappuccino, latte ve daha birçok seçenek': 'Espresso, cappuccino, latte ve daha birçok seçenek',
-            'Tatlılar & İçecekler': 'Tatlılar & İçecekler',
+            'İçecekler & Atıştırmalıklar': 'İçecekler & Atıştırmalıklar',
             'Ev yapımı pasta, kurabiye ve serinletici içecekler': 'Ev yapımı pasta, kurabiye ve serinletici içecekler',
             'Mekanımız': 'Mekanımız',
             'Sıcak ve huzurlu atmosfer': 'Sıcak ve huzurlu atmosfer',
@@ -69,7 +68,6 @@
             'Mükemmel Kahvenin Tadını Çıkar': 'Taste the Perfect Coffee',
             'Dünya standartlarında kahve, yerel sıcaklığında hizmet': 'World-class coffee with local warmth',
             'İletişim Bilgisi': 'Get In Touch',
-            'Hakkımızda': 'About Us',
             'MINAS Kafe, 2015 yılından beri Türkiye\'nin en iyi kahvesini sunmaktadır. Etiyopya, Kenya ve Brazil\'den özel olarak seçilmiş kahve çekirdekleri kullanıyoruz.': 'MINAS Cafe has been serving Turkey\'s finest coffee since 2015. We use specially selected coffee beans from Ethiopia, Kenya, and Brazil.',
             'Barista ekibimiz dünya şampiyonluklarında ödüllü, kalite ve müşteri memnuniyeti bizim önceliğimiz.': 'Our award-winning barista team is committed to quality and customer satisfaction.',
             'Neden MINAS Kafe?': 'Why MINAS Cafe?',
@@ -82,9 +80,9 @@
             'Kahve Çeşidi': 'Coffee Types',
             'Menülerimiz': 'Our Menus',
             'Taze ve lezzetli seçenekler': 'Fresh and delicious options',
-            'Kahveler & Atıştırmalıklar': 'Coffees & Snacks',
+            'Cold & Hot Kahveler ve İçecekler': 'Cold & Hot Coffees and Beverages',
             'Espresso, cappuccino, latte ve daha birçok seçenek': 'Espresso, cappuccino, latte and many more options',
-            'Tatlılar & İçecekler': 'Desserts & Beverages',
+            'İçecekler & Atıştırmalıklar': 'Beverages & Snacks',
             'Ev yapımı pasta, kurabiye ve serinletici içecekler': 'Homemade cakes, cookies and refreshing beverages',
             'Mekanımız': 'Our Place',
             'Sıcak ve huzurlu atmosfer': 'Warm and peaceful atmosphere',
@@ -113,40 +111,38 @@
         }
     };
 
-    // Get current language from localStorage or default to Turkish
-    let currentLanguage = localStorage.getItem('language') || 'tr';
+    // localStorage'dan dili al veya Türkçe yap
+    let gecerliDil = localStorage.getItem('language') || 'tr';
 
-    // Initialize language
-    function initLanguage() {
-        // Set HTML lang attribute
-        document.documentElement.lang = currentLanguage;
+    // Dili başlat
+    function diliBaslat() {
+        document.documentElement.lang = gecerliDil;
         
-        // Update language buttons
-        document.querySelectorAll('.btn-lang').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === currentLanguage);
+        // Butonları güncelle
+        document.querySelectorAll('.btn-lang').forEach(buton => {
+            buton.classList.toggle('active', buton.dataset.lang === gecerliDil);
         });
 
-        updatePageLanguage();
+        sayfaDiliniGuncelle();
     }
 
-    // Update page text based on language
-    function updatePageLanguage() {
-        const currentTranslations = translations[currentLanguage];
+    // Sayfa metinlerini dile göre güncelle
+    function sayfaDiliniGuncelle() {
+        const gecerliCeviriler = ceviriler[gecerliDil];
 
-        // Update all elements with data-tr and data-en attributes
-        document.querySelectorAll('[data-tr]').forEach(element => {
-            const key = currentLanguage === 'tr' ? element.dataset.tr : element.dataset.en;
-            if (currentTranslations[element.dataset.tr]) {
-                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-                    element.placeholder = currentLanguage === 'tr' ? element.dataset.tr : element.dataset.en;
+        // data-tr ve data-en içeren tüm elemanları güncelle
+        document.querySelectorAll('[data-tr]').forEach(eleman => {
+            if (gecerliCeviriler[eleman.dataset.tr]) {
+                if (eleman.tagName === 'INPUT' || eleman.tagName === 'TEXTAREA') {
+                    eleman.placeholder = gecerliDil === 'tr' ? eleman.dataset.tr : eleman.dataset.en;
                 } else {
-                    element.textContent = currentLanguage === 'tr' ? element.dataset.tr : element.dataset.en;
+                    eleman.textContent = gecerliDil === 'tr' ? eleman.dataset.tr : eleman.dataset.en;
                 }
             }
         });
 
-        // Update page title
-        if (currentLanguage === 'en') {
+        // Başlığı güncelle
+        if (gecerliDil === 'en') {
             document.title = 'MINAS Cafe - Premium Coffee Experience | Antalya';
             document.querySelector('meta[name="description"]').content = 'MINAS Cafe - Turkey\'s finest coffee. Premium coffee experience in a peaceful setting.';
         } else {
@@ -155,26 +151,26 @@
         }
     }
 
-    // Language switcher event listeners
-    document.querySelectorAll('.btn-lang').forEach(btn => {
-        btn.addEventListener('click', function() {
-            currentLanguage = this.dataset.lang;
-            localStorage.setItem('language', currentLanguage);
+    // Dil butonu dinleyicileri
+    document.querySelectorAll('.btn-lang').forEach(buton => {
+        buton.addEventListener('click', function() {
+            gecerliDil = this.dataset.lang;
+            localStorage.setItem('language', gecerliDil);
             
-            // Update active button
+            // Aktif butonu güncelle
             document.querySelectorAll('.btn-lang').forEach(b => b.classList.remove('active'));
             this.classList.add('active');
 
-            // Update page
-            initLanguage();
+            // Sayfayı güncelle
+            diliBaslat();
             
-            // Update HTML direction if needed (for RTL languages)
-            document.documentElement.dir = currentLanguage === 'ar' ? 'rtl' : 'ltr';
+            // Yönü ayarla (RTL diller için)
+            document.documentElement.dir = gecerliDil === 'ar' ? 'rtl' : 'ltr';
         });
     });
 
-    // Initialize on page load
-    initLanguage();
+    // Yüklenirken başlat
+    diliBaslat();
 
-    console.log('Language module loaded - Current language: ' + currentLanguage);
+    console.log('Dil modülü yüklendi - Geçerli dil: ' + gecerliDil);
 })();
